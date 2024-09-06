@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  &__wrapperInput {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .users {
+    padding: 10px;
+    border: 1px solid black;
+
+    &__body {
+      border-inline: 1px solid black;
+    }
+  }
+}

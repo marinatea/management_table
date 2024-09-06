@@ -1,11 +1,10 @@
-import React from 'react';
 import './App.css';
-import Table from './components/Table/Table'
+import UserTable from './components/UserTable/UserTable';
 
 function App() {
   return (
     <div className="App">
-      <Table />
+      <UserTable />
     </div>
   );
 }
