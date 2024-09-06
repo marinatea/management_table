@@ -1,11 +1,10 @@
-import './App.css';
-import UserTable from './components/UserTable/UserTable';
+import UserTable from "./components/UserTable/UserTable";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <UserTable />
-    </div>
+    </>
   );
 }
 

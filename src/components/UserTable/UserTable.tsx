@@ -1,21 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { fetchUsers, setFilter } from "../../redux/userSlice";
 import { RootState } from "../../redux/store";
-import { AnyAction } from "redux";
-import s from './UserTable.module.scss';
+import { fetchUsers, setFilter } from "../../redux/userSlice";
+import { User } from "../../utils/types";
+import s from "./UserTable.module.scss";
+import FilterInput from "../FilterInput/FilterInput";
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-}
+type UserAction = ReturnType<typeof setFilter>;
 
 const UserTable: React.FC = () => {
-  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
+  const dispatch: ThunkDispatch<RootState, undefined, UserAction> =
+    useDispatch();
   const { users, filters, loading, error } = useSelector(
     (state: RootState) => state.users
   );
@@ -40,32 +36,36 @@ const UserTable: React.FC = () => {
   );
 
   return (
-    <div className={s.container}>
-      <h1>User Management</h1>
-      <div className={s.container__wrapperInput}>
-        <input
-          type="text"
+    <div className={s.userTable}>
+      <h1 className={s.userTable__title}>User Management</h1>
+      <div className={s.userTable__filters}>
+        <FilterInput
           placeholder="Filter by name"
           value={filters.name}
-          onChange={(e) => handleFilterChange(e, "name")}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleFilterChange(e, "name")
+          }
         />
-        <input
-          type="text"
+        <FilterInput
           placeholder="Filter by username"
           value={filters.username}
-          onChange={(e) => handleFilterChange(e, "username")}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleFilterChange(e, "username")
+          }
         />
-        <input
-          type="text"
+        <FilterInput
           placeholder="Filter by email"
           value={filters.email}
-          onChange={(e) => handleFilterChange(e, "email")}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleFilterChange(e, "email")
+          }
         />
-        <input
-          type="text"
+        <FilterInput
           placeholder="Filter by phone"
           value={filters.phone}
-          onChange={(e) => handleFilterChange(e, "phone")}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleFilterChange(e, "phone")
+          }
         />
       </div>
 
@@ -74,22 +74,22 @@ const UserTable: React.FC = () => {
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <table className={s.users}>
-          <thead>
+        <table className={s.userTable__table}>
+          <thead className={s.userTable__tableHeader}>
             <tr>
-              <th>Name</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Phone</th>
+              <th className={s.userTable__tableHeaderCell}>Name</th>
+              <th className={s.userTable__tableHeaderCell}>Username</th>
+              <th className={s.userTable__tableHeaderCell}>Email</th>
+              <th className={s.userTable__tableHeaderCell}>Phone</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={s.userTable__tableBody}>
             {filteredUsers.map((user: User) => (
-              <tr key={user.id}>
-                <td  className={s.users__body}>{user.name}</td>
-                <td  className={s.users__body}>{user.username}</td>
-                <td  className={s.users__body}>{user.email}</td>
-                <td  className={s.users__body}>{user.phone}</td>
+              <tr key={user.id} className={s.userTable__tableRow}>
+                <td className={s.userTable__tableBodyCell}>{user.name}</td>
+                <td className={s.userTable__tableBodyCell}>{user.username}</td>
+                <td className={s.userTable__tableBodyCell}>{user.email}</td>
+                <td className={s.userTable__tableBodyCell}>{user.phone}</td>
               </tr>
             ))}
           </tbody>

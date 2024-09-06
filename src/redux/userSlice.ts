@@ -1,31 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-}
-
-interface UserState {
-  users: User[];
-  filters: {
-    name: string;
-    username: string;
-    email: string;
-    phone: string;
-  };
-  loading: boolean;
-  error: string | null;
-}
-
-interface Filters {
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-}
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { Filters, User, UserState } from "../utils/types";
 
 const initialState: UserState = {
   users: [],
@@ -39,23 +13,24 @@ const initialState: UserState = {
   error: null,
 };
 
-export const fetchUsers = createAsyncThunk(
-  "users/fetchUsers",
-  async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    return (await response.json()) as User[];
-  }
-);
+export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const data = await response.json();
+  return data as User[];
+});
 
 const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setFilter(state, action) {
-      const { field, value } = action.payload;
-      if (field in state.filters) {
-        state.filters[field as keyof Filters] = value;
-      }
+    setFilter: (
+      state,
+      action: PayloadAction<{
+        field: keyof typeof state.filters;
+        value: string;
+      }>
+    ) => {
+      state.filters[action.payload.field] = action.payload.value;
     },
   },
   extraReducers: (builder) => {
@@ -63,7 +38,7 @@ const userSlice = createSlice({
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.users = action.payload;
         state.loading = false;
       })

@@ -1,19 +1,91 @@
-.container {
-  display: flex;
-  flex-direction: column;
+@use "../../styles/mq.scss" as mQ;
 
-  &__wrapperInput {
-    display: flex;
-    justify-content: space-between;
+.userTable {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 20px;
+
+  &__title {
+    text-align: center;
     margin-bottom: 20px;
+    color: #333;
+    font-size: 2.5rem;
   }
 
-  .users {
-    padding: 10px;
-    border: 1px solid black;
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-direction: column;
+  }
 
-    &__body {
-      border-inline: 1px solid black;
+  &__table {
+    border-radius: 5px;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  &__tableHeader {
+    background-color: #415c78;
+    color: white;
+    text-align: center;
+  }
+
+  &__tableHeaderCell {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &__tableBody {
+    tr {
+      transition: background-color 0.2s ease;
+
+      &:nth-child(odd) {
+        background-color: #f9f9f9;
+      }
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+  }
+
+  &__tableRow {
+    transition: background-color 0.2s ease;
+  }
+
+  &__tableBodyCell {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    color: #000000;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #727597;
+      cursor: pointer;
+    }
+  }
+}
+
+@include mQ.desktop {
+  .userTable {
+    max-width: 1400px;
+
+    &__title {
+      font-size: 3rem;
+    }
+
+    &__tableHeaderCell {
+      font-size: 1.2rem;
+      padding: 20px;
+    }
+
+    &__tableBodyCell {
+      padding: 20px;
     }
   }
 }
