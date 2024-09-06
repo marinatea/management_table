@@ -28,7 +28,7 @@
   }
 
   &__tableHeader {
-    background-color: #415c78;
+    background-color: #47709b;
     color: white;
     text-align: center;
   }
@@ -60,12 +60,12 @@
   &__tableBodyCell {
     padding: 15px;
     border-bottom: 1px solid #ddd;
-    color: #000000;
+    color: #333;
     font-size: 1rem;
     transition: color 0.3s ease;
 
     &:hover {
-      color: #727597;
+      color: #47709b;
       cursor: pointer;
     }
   }
