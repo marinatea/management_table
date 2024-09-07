@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Filters, User, UserState } from "../utils/types";
+import { User, UserState } from "../utils/types";
 
 const initialState: UserState = {
   users: [],
